@@ -17,7 +17,7 @@
 
 /* Begin PBXFileReference section */
 		EA1D458A1E5A273200DCE5B7 /* CalculatorBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
-		EA6290C21E5663C200C6E439 /* Calculator 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calculator 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA6290C21E5663C200C6E439 /* Programming Project 1_ Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Programming Project 1_ Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA6290C51E5663C200C6E439 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA6290C71E5663C200C6E439 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EA6290CA1E5663C200C6E439 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -48,7 +48,7 @@
 		EA6290C31E5663C200C6E439 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EA6290C21E5663C200C6E439 /* Calculator 2.app */,
+				EA6290C21E5663C200C6E439 /* Programming Project 1_ Calculator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -78,9 +78,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EA6290C11E5663C100C6E439 /* Calculator 2 */ = {
+		EA6290C11E5663C100C6E439 /* Programming Project 1_ Calculator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EA6290D41E5663C200C6E439 /* Build configuration list for PBXNativeTarget "Calculator 2" */;
+			buildConfigurationList = EA6290D41E5663C200C6E439 /* Build configuration list for PBXNativeTarget "Programming Project 1_ Calculator" */;
 			buildPhases = (
 				EA6290BE1E5663C100C6E439 /* Sources */,
 				EA6290BF1E5663C100C6E439 /* Frameworks */,
@@ -90,9 +90,9 @@
 			);
 			dependencies = (
 			);
-			name = "Calculator 2";
+			name = "Programming Project 1_ Calculator";
 			productName = Calculator;
-			productReference = EA6290C21E5663C200C6E439 /* Calculator 2.app */;
+			productReference = EA6290C21E5663C200C6E439 /* Programming Project 1_ Calculator.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -112,7 +112,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EA6290BD1E5663C100C6E439 /* Build configuration list for PBXProject "Calculator 2" */;
+			buildConfigurationList = EA6290BD1E5663C100C6E439 /* Build configuration list for PBXProject "Programming Project 1_ Calculator" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -125,7 +125,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EA6290C11E5663C100C6E439 /* Calculator 2 */,
+				EA6290C11E5663C100C6E439 /* Programming Project 1_ Calculator */,
 			);
 		};
 /* End PBXProject section */
@@ -276,7 +276,7 @@
 				DEVELOPMENT_TEAM = X5SVCNCD2D;
 				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = DeimanTechnology.Calculator2;
+				PRODUCT_BUNDLE_IDENTIFIER = "DeimanTechnology.Programming-Project-1--Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -290,7 +290,7 @@
 				DEVELOPMENT_TEAM = X5SVCNCD2D;
 				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = DeimanTechnology.Calculator2;
+				PRODUCT_BUNDLE_IDENTIFIER = "DeimanTechnology.Programming-Project-1--Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -300,7 +300,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EA6290BD1E5663C100C6E439 /* Build configuration list for PBXProject "Calculator 2" */ = {
+		EA6290BD1E5663C100C6E439 /* Build configuration list for PBXProject "Programming Project 1_ Calculator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EA6290D21E5663C200C6E439 /* Debug */,
@@ -309,7 +309,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EA6290D41E5663C200C6E439 /* Build configuration list for PBXNativeTarget "Calculator 2" */ = {
+		EA6290D41E5663C200C6E439 /* Build configuration list for PBXNativeTarget "Programming Project 1_ Calculator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EA6290D51E5663C200C6E439 /* Debug */,

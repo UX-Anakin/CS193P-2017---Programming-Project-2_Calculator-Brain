@@ -8,18 +8,67 @@
 
 import Foundation
 
-private func changeSign(_ operand: Double) -> Double {
-    return operand * -1
+private func random() -> Double {
+    return Double(drand48())
 }
 
 struct CalculatorBrain {
- 
+    
+    var result: Double? {
+        return accumulator
+    }
+    
+    var resultIsPending: Bool {
+        return pendingBinaryOperation != nil
+    }
+
+    mutating func setOperand(_ operand: Double) {
+        accumulator = operand
+        internalProgram.append(accumulator! as AnyObject)
+        let stringToAppend = numberFormatter?.string(from: operand as NSNumber) ?? String(operand)
+        description += stringToAppend
+    }
+    
+    mutating func performOperation(_ symbol: String) {
+        guard let operation = operations[symbol] else { return }
+        switch operation {
+        case .constant(let value) :
+            accumulator = value
+            description += symbol
+        case .unaryOperation(let f):
+            if let operand = accumulator {
+                description += symbol
+                accumulator = f(operand)
+            }
+        case .binaryOperation(let f):
+            if accumulator != nil {
+                pendingBinaryOperation = PendingBinaryOperation(function: f, firstOperand: accumulator!)
+                accumulator = nil
+                description += symbol
+            }
+        case .operationNoArguments(let f): accumulator = f()
+        case .equals:
+            performBinaryOperation()
+        }
+        internalProgram.append(symbol as AnyObject)
+    }
+
+    mutating func clear() {
+        accumulator = nil
+        pendingBinaryOperation = nil
+        internalProgram = []
+        description = ""
+    }
+    
+    weak var numberFormatter: NumberFormatter?
+    
     private var accumulator: Double?
     
     private enum Operation {
         case constant(Double)
         case unaryOperation((Double) -> Double)
         case binaryOperation((Double, Double) -> Double)
+        case operationNoArguments(()->Double)
         case equals
     }
     
@@ -27,8 +76,12 @@ struct CalculatorBrain {
         "π": Operation.constant(Double.pi),
         "e": Operation.constant(M_E),
         "√": Operation.unaryOperation(sqrt),
+        "%": Operation.unaryOperation({ $0/100 }),
+        "sin": Operation.unaryOperation(sin),
         "cos": Operation.unaryOperation(cos),
-        "⁺∕₋": Operation.unaryOperation({ -$0 }),
+        "tan": Operation.unaryOperation(tan),
+        "Ran": Operation.operationNoArguments({ Double(drand48()) }),
+        "⁺∕₋": Operation.unaryOperation { -$0 },
         "×": Operation.binaryOperation(*),
         "÷": Operation.binaryOperation(/),
         "+": Operation.binaryOperation(+),
@@ -36,24 +89,6 @@ struct CalculatorBrain {
         "=": Operation.equals
     ]
     
-    mutating func performOperation(_ symbol: String) {
-        guard let operation = operations[symbol] else { return }
-        switch operation {
-        case .constant(let value) :
-            accumulator = value
-        case .unaryOperation(let f):
-            if let operand = accumulator {
-                accumulator = f(operand)
-            }
-        case .binaryOperation(let f):
-            if accumulator != nil {
-                pendingBinaryOperation = PendingBinaryOperation(function: f, firstOperand: accumulator!)
-                accumulator = nil
-            }
-        case .equals:
-            performBinaryOperation()
-        }
-    }
     
     private mutating func performBinaryOperation() {
         guard pendingBinaryOperation != nil && accumulator != nil else {  return }
@@ -72,14 +107,29 @@ struct CalculatorBrain {
         }
     }
     
-    mutating func setOperand(_ operand: Double) {
-        accumulator = operand
-    }
-    
-    var result: Double? {
-        return accumulator
-    }
+    private var internalProgram = [AnyObject]()
     
     
+    var description: String = ""
+//    {
+//        var targetString = ""
+//        for property in internalProgram {
+//            if let operand = property as? Double {
+//                let stringToAppend = numberFormatter?.string(from: operand as NSNumber) ?? String(operand)
+//                targetString = targetString + stringToAppend
+//            } else {
+//                let symbol = property as! String
+//                let operation = operations[symbol]!
+//                switch operation {
+//                case .constant, .binaryOperation, .operationNoArguments:
+//                    targetString = targetString + symbol
+//                case .unaryOperation:
+//                    targetString = symbol + "(" + targetString + ")"
+//                default: break
+//                }
+//            }
+//        }
+//        return targetString
+//    }
     
 }

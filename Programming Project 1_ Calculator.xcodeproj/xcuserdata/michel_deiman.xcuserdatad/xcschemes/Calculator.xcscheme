@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EA6290C11E5663C100C6E439"
-               BuildableName = "Calculator 2.app"
-               BlueprintName = "Calculator 2"
-               ReferencedContainer = "container:Calculator 2.xcodeproj">
+               BuildableName = "Programming Project 1_ Calculator.app"
+               BlueprintName = "Programming Project 1_ Calculator"
+               ReferencedContainer = "container:Programming Project 1_ Calculator.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EA6290C11E5663C100C6E439"
-            BuildableName = "Calculator 2.app"
-            BlueprintName = "Calculator 2"
-            ReferencedContainer = "container:Calculator 2.xcodeproj">
+            BuildableName = "Programming Project 1_ Calculator.app"
+            BlueprintName = "Programming Project 1_ Calculator"
+            ReferencedContainer = "container:Programming Project 1_ Calculator.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EA6290C11E5663C100C6E439"
-            BuildableName = "Calculator 2.app"
-            BlueprintName = "Calculator 2"
-            ReferencedContainer = "container:Calculator 2.xcodeproj">
+            BuildableName = "Programming Project 1_ Calculator.app"
+            BlueprintName = "Programming Project 1_ Calculator"
+            ReferencedContainer = "container:Programming Project 1_ Calculator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EA6290C11E5663C100C6E439"
-            BuildableName = "Calculator 2.app"
-            BlueprintName = "Calculator 2"
-            ReferencedContainer = "container:Calculator 2.xcodeproj">
+            BuildableName = "Programming Project 1_ Calculator.app"
+            BlueprintName = "Programming Project 1_ Calculator"
+            ReferencedContainer = "container:Programming Project 1_ Calculator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
