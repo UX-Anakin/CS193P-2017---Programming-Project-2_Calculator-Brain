@@ -8,10 +8,6 @@
 
 import Foundation
 
-private func random() -> Double {
-    return Double(drand48())
-}
-
 struct CalculatorBrain {
     
     var result: Double? {
@@ -23,46 +19,74 @@ struct CalculatorBrain {
     }
 
     mutating func setOperand(_ operand: Double) {
+        if !resultIsPending {
+            clear()
+        }
         accumulator = operand
-        internalProgram.append(accumulator! as AnyObject)
-        let stringToAppend = numberFormatter?.string(from: operand as NSNumber) ?? String(operand)
-        description += stringToAppend
+        descriptions.append(formattedAccumulator!)
     }
+    
     
     mutating func performOperation(_ symbol: String) {
         guard let operation = operations[symbol] else { return }
         switch operation {
         case .constant(let value) :
             accumulator = value
-            description += symbol
+            descriptions.append(symbol)
         case .unaryOperation(let f):
             if let operand = accumulator {
-                description += symbol
+                if resultIsPending {
+                    let lastOperand = descriptions.last!
+                    descriptions = [String](descriptions.dropLast()) + [symbol + "(" + lastOperand + ")"]
+                } else {
+                    descriptions = [symbol + "("] + descriptions + [")"]
+                }
                 accumulator = f(operand)
             }
         case .binaryOperation(let f):
+            if resultIsPending {
+                performBinaryOperation()
+            }
             if accumulator != nil {
                 pendingBinaryOperation = PendingBinaryOperation(function: f, firstOperand: accumulator!)
-                accumulator = nil
-                description += symbol
+                descriptions.append(symbol)
             }
-        case .operationNoArguments(let f): accumulator = f()
+        case .operationNoArguments(let f):
+            accumulator = f()
+            descriptions.append(symbol)
         case .equals:
             performBinaryOperation()
         }
-        internalProgram.append(symbol as AnyObject)
     }
 
     mutating func clear() {
         accumulator = nil
         pendingBinaryOperation = nil
-        internalProgram = []
-        description = ""
+        descriptions = []
     }
     
     weak var numberFormatter: NumberFormatter?
     
+    var description: String {
+        var returnString: String = ""
+        for element in descriptions {
+            returnString += element
+        }
+        return returnString
+    }
+    
+    // private section starts here ...
+    
+    private var descriptions: [String] = []
+    
     private var accumulator: Double?
+    private var formattedAccumulator: String? {
+        if let number = accumulator {
+            return numberFormatter?.string(from: number as NSNumber) ?? String(number)
+        } else {
+            return nil
+        }
+    }
     
     private enum Operation {
         case constant(Double)
@@ -106,30 +130,5 @@ struct CalculatorBrain {
             return function(firstOperand, secondOperand)
         }
     }
-    
-    private var internalProgram = [AnyObject]()
-    
-    
-    var description: String = ""
-//    {
-//        var targetString = ""
-//        for property in internalProgram {
-//            if let operand = property as? Double {
-//                let stringToAppend = numberFormatter?.string(from: operand as NSNumber) ?? String(operand)
-//                targetString = targetString + stringToAppend
-//            } else {
-//                let symbol = property as! String
-//                let operation = operations[symbol]!
-//                switch operation {
-//                case .constant, .binaryOperation, .operationNoArguments:
-//                    targetString = targetString + symbol
-//                case .unaryOperation:
-//                    targetString = symbol + "(" + targetString + ")"
-//                default: break
-//                }
-//            }
-//        }
-//        return targetString
-//    }
     
 }

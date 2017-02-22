@@ -59,9 +59,6 @@ class ViewController: UIViewController {
 
     @IBAction func performOperation(_ sender: UIButton) {
         if userIsInTheMiddleOfTyping {
-            if !brain.resultIsPending {
-                brain.clear()
-            }
             brain.setOperand(displayValue)
             userIsInTheMiddleOfTyping = false
         }
