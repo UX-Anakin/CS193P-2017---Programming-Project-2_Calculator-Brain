@@ -13,6 +13,7 @@ class ViewController: UIViewController {
  
     @IBOutlet weak var history: UILabel!
     @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var backSpace_Undo: UIButton!
 
     var displayValue: Double {
         get {
@@ -23,7 +24,15 @@ class ViewController: UIViewController {
         }
     }
     
-    var userIsInTheMiddleOfTyping = false
+    var userIsInTheMiddleOfTyping = false {
+        didSet {
+            if userIsInTheMiddleOfTyping {
+                backSpace_Undo.setTitle("⌫", for: .normal)
+            } else {
+                backSpace_Undo.setTitle("undo", for: .normal)
+            }
+        }
+    }
     
     private var brain = CalculatorBrain()
     
@@ -40,11 +49,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func backSpace()
-    {	guard userIsInTheMiddleOfTyping else { return }
-        display.text = String(display.text!.characters.dropLast())
-        if display.text?.characters.count == 0
-        {	displayValue = 0.0
-            userIsInTheMiddleOfTyping = false
+    {	if userIsInTheMiddleOfTyping {
+            display.text = String(display.text!.characters.dropLast())
+            if display.text?.characters.count == 0
+            {	displayValue = 0.0
+                userIsInTheMiddleOfTyping = false
+            }
+        } else {
+        
         }
     }
     
@@ -65,11 +77,12 @@ class ViewController: UIViewController {
         if let mathematicalSymbol = sender.currentTitle {
             brain.performOperation(mathematicalSymbol)
         }
-        if let result = brain.result {
+        let evaluation = brain.evaluate()
+        if let result = evaluation.result {
             displayValue = result
         }
-        let postfixDescription = brain.resultIsPending ? "..." : "="
-        history.text = brain.description + postfixDescription
+        let postfixDescription = evaluation.isPending ? "..." : "="
+        history.text = evaluation.description + postfixDescription
     }
     
     @IBAction private func clearAll()

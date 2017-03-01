@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EA1D458B1E5A273200DCE5B7 /* CalculatorBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1D458A1E5A273200DCE5B7 /* CalculatorBrain.swift */; };
+		EA2D39B71E67865000A408B9 /* accountant.gif in Resources */ = {isa = PBXBuildFile; fileRef = EA2D39B61E67865000A408B9 /* accountant.gif */; };
 		EA6290C61E5663C200C6E439 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6290C51E5663C200C6E439 /* AppDelegate.swift */; };
 		EA6290C81E5663C200C6E439 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6290C71E5663C200C6E439 /* ViewController.swift */; };
 		EA6290CB1E5663C200C6E439 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA6290C91E5663C200C6E439 /* Main.storyboard */; };
@@ -17,7 +18,8 @@
 
 /* Begin PBXFileReference section */
 		EA1D458A1E5A273200DCE5B7 /* CalculatorBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
-		EA6290C21E5663C200C6E439 /* Programming Project 1_ Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Programming Project 1_ Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA2D39B61E67865000A408B9 /* accountant.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = accountant.gif; sourceTree = "<group>"; };
+		EA6290C21E5663C200C6E439 /* Programming Project 2_ Calculator Brain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Programming Project 2_ Calculator Brain.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA6290C51E5663C200C6E439 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA6290C71E5663C200C6E439 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EA6290CA1E5663C200C6E439 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -40,7 +42,7 @@
 		EA6290B91E5663C100C6E439 = {
 			isa = PBXGroup;
 			children = (
-				EA6290C41E5663C200C6E439 /* Calculator */,
+				EA6290C41E5663C200C6E439 /* Calculator Brain */,
 				EA6290C31E5663C200C6E439 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,12 +50,12 @@
 		EA6290C31E5663C200C6E439 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EA6290C21E5663C200C6E439 /* Programming Project 1_ Calculator.app */,
+				EA6290C21E5663C200C6E439 /* Programming Project 2_ Calculator Brain.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EA6290C41E5663C200C6E439 /* Calculator */ = {
+		EA6290C41E5663C200C6E439 /* Calculator Brain */ = {
 			isa = PBXGroup;
 			children = (
 				EA6290D71E56641700C6E439 /* Supporting Files */,
@@ -61,6 +63,7 @@
 				EA6290C71E5663C200C6E439 /* ViewController.swift */,
 				EA6290C91E5663C200C6E439 /* Main.storyboard */,
 			);
+			name = "Calculator Brain";
 			path = Calculator;
 			sourceTree = "<group>";
 		};
@@ -70,6 +73,7 @@
 				EA6290C51E5663C200C6E439 /* AppDelegate.swift */,
 				EA6290CC1E5663C200C6E439 /* Assets.xcassets */,
 				EA6290CE1E5663C200C6E439 /* LaunchScreen.storyboard */,
+				EA2D39B61E67865000A408B9 /* accountant.gif */,
 				EA6290D11E5663C200C6E439 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -78,9 +82,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EA6290C11E5663C100C6E439 /* Programming Project 1_ Calculator */ = {
+		EA6290C11E5663C100C6E439 /* Programming Project 2_ Calculator Brain */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EA6290D41E5663C200C6E439 /* Build configuration list for PBXNativeTarget "Programming Project 1_ Calculator" */;
+			buildConfigurationList = EA6290D41E5663C200C6E439 /* Build configuration list for PBXNativeTarget "Programming Project 2_ Calculator Brain" */;
 			buildPhases = (
 				EA6290BE1E5663C100C6E439 /* Sources */,
 				EA6290BF1E5663C100C6E439 /* Frameworks */,
@@ -90,9 +94,9 @@
 			);
 			dependencies = (
 			);
-			name = "Programming Project 1_ Calculator";
+			name = "Programming Project 2_ Calculator Brain";
 			productName = Calculator;
-			productReference = EA6290C21E5663C200C6E439 /* Programming Project 1_ Calculator.app */;
+			productReference = EA6290C21E5663C200C6E439 /* Programming Project 2_ Calculator Brain.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -112,7 +116,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EA6290BD1E5663C100C6E439 /* Build configuration list for PBXProject "Programming Project 1_ Calculator" */;
+			buildConfigurationList = EA6290BD1E5663C100C6E439 /* Build configuration list for PBXProject "Programming Project 2_ Calculator Brain" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -125,7 +129,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EA6290C11E5663C100C6E439 /* Programming Project 1_ Calculator */,
+				EA6290C11E5663C100C6E439 /* Programming Project 2_ Calculator Brain */,
 			);
 		};
 /* End PBXProject section */
@@ -138,6 +142,7 @@
 				EA6290D01E5663C200C6E439 /* LaunchScreen.storyboard in Resources */,
 				EA6290CD1E5663C200C6E439 /* Assets.xcassets in Resources */,
 				EA6290CB1E5663C200C6E439 /* Main.storyboard in Resources */,
+				EA2D39B71E67865000A408B9 /* accountant.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +305,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EA6290BD1E5663C100C6E439 /* Build configuration list for PBXProject "Programming Project 1_ Calculator" */ = {
+		EA6290BD1E5663C100C6E439 /* Build configuration list for PBXProject "Programming Project 2_ Calculator Brain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EA6290D21E5663C200C6E439 /* Debug */,
@@ -309,7 +314,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EA6290D41E5663C200C6E439 /* Build configuration list for PBXNativeTarget "Programming Project 1_ Calculator" */ = {
+		EA6290D41E5663C200C6E439 /* Build configuration list for PBXNativeTarget "Programming Project 2_ Calculator Brain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EA6290D51E5663C200C6E439 /* Debug */,

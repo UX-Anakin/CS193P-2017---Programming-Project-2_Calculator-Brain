@@ -2,17 +2,22 @@
 
 import UIKit
 
-var str = "Hello, playground"
-var str2 = "ground"
+let x = Optional<String>.none
 
-let n = str2.characters.count
-let m = str.startIndex
 
-let range = str.index(str.endIndex, offsetBy: -str2.characters.count)..<str.endIndex
-str.removeSubrange(range)
+var str: String = "Café du monde"
 
-var yy = [1,2,3,4]
+var a1 = Array(str.characters)
 
-yy.dropLast()
+var a2 = str.characters.startIndex
+print(a2)
+
+
+var s1 = String(a1)
+
+
+
+
+
 
 
