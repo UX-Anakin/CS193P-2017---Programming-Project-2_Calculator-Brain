@@ -281,7 +281,7 @@
 				DEVELOPMENT_TEAM = X5SVCNCD2D;
 				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "DeimanTechnology.Programming-Project-1--Calculator";
+				PRODUCT_BUNDLE_IDENTIFIER = "DeimanTechnology.Programming-Project-2--Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -295,7 +295,7 @@
 				DEVELOPMENT_TEAM = X5SVCNCD2D;
 				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "DeimanTechnology.Programming-Project-1--Calculator";
+				PRODUCT_BUNDLE_IDENTIFIER = "DeimanTechnology.Programming-Project-2--Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

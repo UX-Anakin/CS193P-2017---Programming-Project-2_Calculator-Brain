@@ -10,10 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
- 
     @IBOutlet weak var history: UILabel!
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var backSpace_Undo: UIButton!
+    @IBOutlet weak var memoryKey: UIButton!
+    @IBOutlet weak var decimalSeparator: UIButton!
+
+    private var brain = CalculatorBrain()
 
     var displayValue: Double {
         get {
@@ -34,9 +37,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private var brain = CalculatorBrain()
-    
-    
+
     @IBAction func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTyping {
@@ -56,6 +57,9 @@ class ViewController: UIViewController {
                 userIsInTheMiddleOfTyping = false
             }
         } else {
+            _ = brain.undo()
+            evaluateExpression()
+//            performOperation(backSpace_Undo)
         
         }
     }
@@ -72,15 +76,19 @@ class ViewController: UIViewController {
     @IBAction func performOperation(_ sender: UIButton) {
         if userIsInTheMiddleOfTyping {
             brain.setOperand(displayValue)
-            userIsInTheMiddleOfTyping = false
         }
         if let mathematicalSymbol = sender.currentTitle {
             brain.performOperation(mathematicalSymbol)
         }
-        let evaluation = brain.evaluate()
+        evaluateExpression()
+    }
+    
+    private func evaluateExpression(using variables: Dictionary<String,Double>? = nil) {
+        let evaluation = brain.evaluate(using: variables)
         if let result = evaluation.result {
             displayValue = result
         }
+        userIsInTheMiddleOfTyping = false
         let postfixDescription = evaluation.isPending ? "..." : "="
         history.text = evaluation.description + postfixDescription
     }
@@ -89,9 +97,26 @@ class ViewController: UIViewController {
     {	brain.clear()
         displayValue = 0.0
         history.text = " "
+        memoryKey.setTitle("M", for: .normal)
     }
+    
+    @IBAction func onMemory(_ sender: UIButton) {
+        if let key = sender.currentTitle
+        {
+            switch key {
+            case "M":
+                brain.setOperand(variable: "M")
+                evaluateExpression()
+            case "⇢M":
+                let variables = ["M": displayValue]
+                memoryKey.setTitle(display.text!, for: .normal)
+                evaluateExpression(using: variables)
+            default: break
+            }
+        }
+    }
+    
 
-    @IBOutlet weak var decimalSeparator: UIButton!
     private var numberFormatter = NumberFormatter()
     
     override func viewDidLoad() {

@@ -2,68 +2,79 @@
 //  CalculatorBrain.swift
 //  Calculator 2
 //
-//  Created by Michel Deiman on 19/02/2017.
+//  Created by Michel Deiman on 02/03/2017.
 //  Copyright © 2017 Michel Deiman. All rights reserved.
 //
 
 import Foundation
 
+struct dictionaryForVars {
+    static var variables: [String: Double] = [:]
+}
+
 struct CalculatorBrain {
     
 @available(iOS, deprecated, message: "No longer needed")
     var result: Double? {
-        let evaluation = evaluate()
-        return evaluation.result
+        return evaluate().result
     }
     
 @available(iOS, deprecated, message: "No longer needed")
     var resultIsPending: Bool {
-        let evaluation = evaluate()
-        return evaluation.isPending
+        return evaluate().isPending
     }
     
-    mutating func setOperand(_ operand: Double) {
-        if pendingBinaryOperation == nil {
-            clear()
+    mutating func setOperand(_ operand: Double)
+    {   if !evaluate().isPending {
+            resetExpression()
         }
         accumulator = operand
         expression.append(.operand(.value(operand)))
     }
     
     mutating func setOperand(variable named: String)
-    {   if pendingBinaryOperation == nil {
-            clear()
+    {   if !evaluate().isPending {
+            resetExpression()
         }
-        variables[named] = accumulator ?? 0
         expression.append(.operand(.variable(named)))
+        accumulator = dictionaryForVars.variables[named] ?? 0
     }
     
-    mutating func undo() {
-        guard !expression.isEmpty else { return }
+    mutating func undo() -> (result: Double?, isPending: Bool, description: String)?
+    {
+        guard !expression.isEmpty else { return nil }
         expression = [ExpressionLiteral](expression.dropLast())
-        let evaluation = evaluate(using: variables)
         
-    }
-    
-    private func evaluate(using calculatorBrain: CalculatorBrain) -> (result: Double?, isPending: Bool, description: String) {
-        
-        
-        return (0, true, "")
+        _useThisInstanceOfCalculatorBrain = true
+        let evaluation = evaluate()
+        _useThisInstanceOfCalculatorBrain = false
+        return evaluation
     }
     
     func evaluate(using variables: Dictionary<String,Double>? = nil) -> (result: Double?, isPending: Bool, description: String)
-    {   var calculatorBrain = CalculatorBrain()
-        calculatorBrain.numberFormatter = numberFormatter
+    {
+        let expression = self.expression
+        var calculatorBrain: CalculatorBrain
+        if _useThisInstanceOfCalculatorBrain {
+            calculatorBrain = self
+            calculatorBrain.resetExpression()
+        } else {
+            calculatorBrain = CalculatorBrain()
+            calculatorBrain.numberFormatter = numberFormatter
+        }
+        if variables != nil {
+            dictionaryForVars.variables = variables!
+        }
+        
         for expressionLiteral in expression {
             switch expressionLiteral {
             case .operand(let operand):
                 switch operand {
                 case .variable(let name):
-                    calculatorBrain.setOperand(variables?[name] ?? 0)
+                    calculatorBrain.accumulator = dictionaryForVars.variables[name] ?? 0
+                    calculatorBrain.setOperand(variable: name)
                 case .value(let operandValue):
                     calculatorBrain.setOperand(operandValue)
-                case .valueAsString(let valueAsString):
-                    calculatorBrain.setOperand(Double(valueAsString)!)
                 }
             case .operation(let symbol):
                 calculatorBrain.performOperation(symbol)
@@ -99,9 +110,8 @@ struct CalculatorBrain {
     }
 
     mutating func clear() {
-        accumulator = nil
-        pendingBinaryOperation = nil
-        expression = []
+        resetExpression()
+        dictionaryForVars.variables = [:]
     }
     
     weak var numberFormatter: NumberFormatter?
@@ -112,6 +122,14 @@ struct CalculatorBrain {
     }
     
     // private section starts here ...
+    private var _useThisInstanceOfCalculatorBrain: Bool = false
+    
+    private mutating func resetExpression() {
+        accumulator = nil
+        pendingBinaryOperation = nil
+        expression = []
+    }
+
     private func createDescription() -> String {
         var descriptions: [String] = []
         var pendingBinaryOperation = false
@@ -121,7 +139,6 @@ struct CalculatorBrain {
                 switch operand {
                 case .value(let value): descriptions += [numberFormatter?.string(from: value as NSNumber) ?? String(value)]
                 case .variable(let name): descriptions += [name]
-                case .valueAsString(let valueAsString): descriptions += [valueAsString]
                 }
             case .operation(let symbol):
                 guard let operation = operations[symbol] else { break }
@@ -146,13 +163,6 @@ struct CalculatorBrain {
     }
     
     private var accumulator: Double?
-    private var formattedAccumulator: String? {
-        if let number = accumulator {
-            return numberFormatter?.string(from: number as NSNumber) ?? String(number)
-        } else {
-            return nil
-        }
-    }
     
     private var expression: [ExpressionLiteral] = []
     
@@ -163,7 +173,6 @@ struct CalculatorBrain {
         enum Operand {
             case variable(String)
             case value(Double)
-            case valueAsString(String)
         }
     }
     
@@ -174,8 +183,6 @@ struct CalculatorBrain {
         case operationNoArguments(()->Double)
         case equals
     }
-    
-    private var variables: [String: Double] = [:]
     
     private var operations: Dictionary<String, Operation> = [
         "π": Operation.constant(Double.pi),
