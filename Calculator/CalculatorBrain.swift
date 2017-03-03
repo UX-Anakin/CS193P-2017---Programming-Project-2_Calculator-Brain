@@ -33,8 +33,8 @@ struct CalculatorBrain {
     {   if !evaluate().isPending {
             resetExpression()
         }
-        expression.append(.operand(.variable(named)))
         accumulator = dictionaryForVars.variables[named] ?? 0
+        expression.append(.operand(.variable(named)))
     }
     
     mutating func undo() -> (result: Double?, isPending: Bool, description: String)?
@@ -84,12 +84,12 @@ struct CalculatorBrain {
                 accumulator = f(operand)
             }
         case .binaryOperation(let f):
-            if _didSetAccumulator && accumulator != nil {
+            if _didResetAccumulator && accumulator != nil {
                 if pendingBinaryOperation != nil {
                     performBinaryOperation()
                 }
                 pendingBinaryOperation = PendingBinaryOperation(function: f, firstOperand: accumulator!)
-                _didSetAccumulator = false
+                _didResetAccumulator = false
                 expression.append(.operation(symbol))
             }
         case .operationNoArguments(let f):
@@ -100,7 +100,7 @@ struct CalculatorBrain {
         case .equals:
             performBinaryOperation()
         }
-        if _didSetAccumulator {
+        if _didResetAccumulator {
             expression.append(.operation(symbol))
         }
     }
@@ -165,10 +165,10 @@ struct CalculatorBrain {
     
     private var accumulator: Double? {
         didSet {
-            _didSetAccumulator = true
+            _didResetAccumulator = true
         }
     }
-    private var _didSetAccumulator: Bool = false
+    private var _didResetAccumulator: Bool = false
     
     private var expression: [ExpressionLiteral] = []
     

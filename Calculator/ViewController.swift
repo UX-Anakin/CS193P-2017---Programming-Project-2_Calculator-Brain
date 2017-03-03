@@ -102,16 +102,13 @@ class ViewController: UIViewController {
     
     @IBAction func onMemory(_ sender: UIButton) {
         if let key = sender.currentTitle
-        {
-            switch key {
-            case "M":
-                brain.setOperand(variable: "M")
-                evaluateExpression()
-            case "⇢M":
+        {   if key == "⇢M" {
                 let variables = ["M": displayValue]
                 memoryKey.setTitle(display.text!, for: .normal)
                 evaluateExpression(using: variables)
-            default: break
+            } else {
+                brain.setOperand(variable: "M")
+                evaluateExpression()
             }
         }
     }
