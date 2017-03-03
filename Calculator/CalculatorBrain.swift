@@ -9,13 +9,18 @@
 import Foundation
 
 
+struct DoubleToString {
+    static let numberFormatter = NumberFormatter()
+}
+
+
 struct CalculatorBrain {
     
 @available(iOS, deprecated, message: "No longer needed")
     var result: Double? {
         return evaluate().result
     }
-    
+        
 @available(iOS, deprecated, message: "No longer needed")
     var resultIsPending: Bool {
         return evaluate().isPending
@@ -49,7 +54,6 @@ struct CalculatorBrain {
     {
         let expression = self.expression
         var calculatorBrain = CalculatorBrain()
-        calculatorBrain.numberFormatter = numberFormatter
         if variables != nil {
             dictionaryForVars.variables = variables!
         }
@@ -105,14 +109,12 @@ struct CalculatorBrain {
         }
     }
     
-
-
     mutating func clear() {
         resetExpression()
         dictionaryForVars.variables = [:]
     }
     
-    weak var numberFormatter: NumberFormatter?
+    weak var numberFormatter: NumberFormatter! = CalculatorBrain.DoubleToString.numberFormatter
     
 @available(iOS, deprecated, message: "No longer needed")
     var description: String {
@@ -124,6 +126,11 @@ struct CalculatorBrain {
     private struct dictionaryForVars {
         static var variables: [String: Double] = [:]
     }
+    
+    struct DoubleToString {
+        static let numberFormatter = NumberFormatter()
+    }
+
     
     private mutating func resetExpression() {
         accumulator = nil
@@ -138,7 +145,7 @@ struct CalculatorBrain {
         {   switch literal {
             case .operand(let operand):
                 switch operand {
-                case .value(let value): descriptions += [numberFormatter?.string(from: value as NSNumber) ?? String(value)]
+                case .value(let value): descriptions += [numberFormatter.string(from: value as NSNumber) ?? String(value)]
                 case .variable(let name): descriptions += [name]
                 }
             case .operation(let symbol):
@@ -163,11 +170,7 @@ struct CalculatorBrain {
         return descriptions.reduce("", +)
     }
     
-    private var accumulator: Double? {
-        didSet {
-            _didResetAccumulator = true
-        }
-    }
+    private var accumulator: Double? {  didSet {    _didResetAccumulator = true }   }
     private var _didResetAccumulator: Bool = false
     
     private var expression: [ExpressionLiteral] = []

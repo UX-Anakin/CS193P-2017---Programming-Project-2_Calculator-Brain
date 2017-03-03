@@ -20,10 +20,12 @@ class ViewController: UIViewController {
 
     var displayValue: Double {
         get {
-            return Double(display.text!)!
+            guard let valueString = display.text else { return 0.0 }
+            let value = numberFormatter.number(from: valueString)
+            return Double(value ?? 0)
         }
         set {
-            display.text = numberFormatter.string(from: newValue as NSNumber)
+            display.text = numberFormatter?.string(from: newValue as NSNumber)
         }
     }
     
@@ -32,7 +34,7 @@ class ViewController: UIViewController {
             if userIsInTheMiddleOfTyping {
                 backSpace_Undo.setTitle("⌫", for: .normal)
             } else {
-                backSpace_Undo.setTitle("undo", for: .normal)
+                backSpace_Undo.setTitle("⋘", for: .normal)
             }
         }
     }
@@ -114,7 +116,7 @@ class ViewController: UIViewController {
     }
     
 
-    private var numberFormatter = NumberFormatter()
+    private weak var numberFormatter: NumberFormatter! = CalculatorBrain.DoubleToString.numberFormatter
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,9 +124,7 @@ class ViewController: UIViewController {
         numberFormatter.maximumFractionDigits = 6
         numberFormatter.minimumFractionDigits = 0
         numberFormatter.minimumIntegerDigits = 1
-        decimalSeparator.setTitle(numberFormatter.decimalSeparator,
-                                  for: .normal)
-        brain.numberFormatter = numberFormatter
+        decimalSeparator.setTitle(numberFormatter?.decimalSeparator, for: .normal)
     }
     
 
