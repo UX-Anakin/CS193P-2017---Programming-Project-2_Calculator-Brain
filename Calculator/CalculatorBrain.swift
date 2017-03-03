@@ -8,9 +8,6 @@
 
 import Foundation
 
-struct dictionaryForVars {
-    static var variables: [String: Double] = [:]
-}
 
 struct CalculatorBrain {
     
@@ -44,24 +41,15 @@ struct CalculatorBrain {
     {
         guard !expression.isEmpty else { return nil }
         expression = [ExpressionLiteral](expression.dropLast())
-        
-        _useThisInstanceOfCalculatorBrain = true
         let evaluation = evaluate()
-        _useThisInstanceOfCalculatorBrain = false
         return evaluation
     }
     
     func evaluate(using variables: Dictionary<String,Double>? = nil) -> (result: Double?, isPending: Bool, description: String)
     {
         let expression = self.expression
-        var calculatorBrain: CalculatorBrain
-        if _useThisInstanceOfCalculatorBrain {
-            calculatorBrain = self
-            calculatorBrain.resetExpression()
-        } else {
-            calculatorBrain = CalculatorBrain()
-            calculatorBrain.numberFormatter = numberFormatter
-        }
+        var calculatorBrain = CalculatorBrain()
+        calculatorBrain.numberFormatter = numberFormatter
         if variables != nil {
             dictionaryForVars.variables = variables!
         }
@@ -87,27 +75,37 @@ struct CalculatorBrain {
         guard let operation = operations[symbol] else { return }
         switch operation {
         case .constant(let value) :
+            if pendingBinaryOperation == nil {
+                resetExpression()
+            }
             accumulator = value
         case .unaryOperation(let f):
             if let operand = accumulator {
                 accumulator = f(operand)
             }
         case .binaryOperation(let f):
-            if pendingBinaryOperation != nil {
-                performBinaryOperation()
-            }
-            if accumulator != nil {
+            if _didSetAccumulator && accumulator != nil {
+                if pendingBinaryOperation != nil {
+                    performBinaryOperation()
+                }
                 pendingBinaryOperation = PendingBinaryOperation(function: f, firstOperand: accumulator!)
+                _didSetAccumulator = false
+                expression.append(.operation(symbol))
             }
         case .operationNoArguments(let f):
+            if pendingBinaryOperation == nil {
+                resetExpression()
+            }
             accumulator = f()
         case .equals:
             performBinaryOperation()
         }
-        if accumulator != nil {
+        if _didSetAccumulator {
             expression.append(.operation(symbol))
         }
     }
+    
+
 
     mutating func clear() {
         resetExpression()
@@ -122,7 +120,10 @@ struct CalculatorBrain {
     }
     
     // private section starts here ...
-    private var _useThisInstanceOfCalculatorBrain: Bool = false
+    
+    private struct dictionaryForVars {
+        static var variables: [String: Double] = [:]
+    }
     
     private mutating func resetExpression() {
         accumulator = nil
@@ -162,7 +163,12 @@ struct CalculatorBrain {
         return descriptions.reduce("", +)
     }
     
-    private var accumulator: Double?
+    private var accumulator: Double? {
+        didSet {
+            _didSetAccumulator = true
+        }
+    }
+    private var _didSetAccumulator: Bool = false
     
     private var expression: [ExpressionLiteral] = []
     

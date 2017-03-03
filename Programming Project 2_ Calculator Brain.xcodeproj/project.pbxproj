@@ -59,8 +59,8 @@
 			isa = PBXGroup;
 			children = (
 				EA6290D71E56641700C6E439 /* Supporting Files */,
-				EA1D458A1E5A273200DCE5B7 /* CalculatorBrain.swift */,
 				EA6290C71E5663C200C6E439 /* ViewController.swift */,
+				EA1D458A1E5A273200DCE5B7 /* CalculatorBrain.swift */,
 				EA6290C91E5663C200C6E439 /* Main.storyboard */,
 			);
 			name = "Calculator Brain";
