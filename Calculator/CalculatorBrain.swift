@@ -8,23 +8,78 @@
 
 import Foundation
 
+/// Model
 
 struct DoubleToString {
     static let numberFormatter = NumberFormatter()
 }
 
-
+/*
+ Classs Vs Struct 
+ Class have inheritance, struct do not.okay
+ class live in the heap, and you have pointers to them, struct do not live in the heap,and they are passed around by copying them,okay.
+ We call the, in the heap file style, reference types.
+ 
+ struct automatically get an initializer
+ */
 struct CalculatorBrain {
     
 @available(iOS, deprecated, message: "No longer needed")
+    
     var result: Double? {
         return evaluate().result
     }
         
 @available(iOS, deprecated, message: "No longer needed")
+    
     var resultIsPending: Bool {
         return evaluate().isPending
     }
+
+    private enum Operation {
+        case constant(Double)
+        case unaryOperation((Double) -> Double)
+        case binaryOperation((Double, Double) -> Double)
+        case operationNoArguments(()->Double)
+        case equals
+    }
+    
+    private var operations: Dictionary<String, Operation> = [
+        "π"   : Operation.constant(Double.pi),
+        "e"   : Operation.constant(M_E),
+        "√"   : Operation.unaryOperation(sqrt),
+        "%"   : Operation.unaryOperation({ $0/100 }),
+        "sin" : Operation.unaryOperation(sin),
+        "cos" : Operation.unaryOperation(cos),
+        "tan" : Operation.unaryOperation(tan),
+        "Ran" : Operation.operationNoArguments({ Double(drand48()) }),
+        "⁺∕₋" : Operation.unaryOperation ({ -$0 }),
+        "×"   : Operation.binaryOperation({$0 * $1}),
+        "÷"   : Operation.binaryOperation(/),
+        "+"   : Operation.binaryOperation(+),
+        "-"   : Operation.binaryOperation(-),
+        "="   : Operation.equals
+    ]
+    
+     private var accumulator: Double? {
+        didSet {
+            _didResetAccumulator = true
+        }
+    }
+
+    private struct PendingBinaryOperation {
+        
+        let function: (Double, Double) -> Double
+        let firstOperand: Double
+        
+        func perform(with secondOperand: Double) -> Double {
+            return function(firstOperand, secondOperand)
+        }
+    }
+
+    private var pendingBinaryOperation: PendingBinaryOperation?
+
+    private var _didResetAccumulator: Bool = false
     
     mutating func setOperand(_ operand: Double)
     {   if !evaluate().isPending {
@@ -76,34 +131,41 @@ struct CalculatorBrain {
     }
     
     mutating func performOperation(_ symbol: String) {
+        
         guard let operation = operations[symbol] else { return }
+        
         switch operation {
         case .constant(let value) :
             if pendingBinaryOperation == nil {
                 resetExpression()
             }
             accumulator = value
-        case .unaryOperation(let f):
+            
+        case .unaryOperation(let function):
             if let operand = accumulator {
-                accumulator = f(operand)
+                accumulator = function(operand)
             }
-        case .binaryOperation(let f):
+            
+        case .binaryOperation(let function):
             if _didResetAccumulator && accumulator != nil {
                 if pendingBinaryOperation != nil {
                     performBinaryOperation()
                 }
-                pendingBinaryOperation = PendingBinaryOperation(function: f, firstOperand: accumulator!)
+                pendingBinaryOperation = PendingBinaryOperation(function: function, firstOperand: accumulator!)
                 _didResetAccumulator = false
                 expression.append(.operation(symbol))
             }
-        case .operationNoArguments(let f):
+            
+        case .operationNoArguments(let function):
             if pendingBinaryOperation == nil {
                 resetExpression()
             }
-            accumulator = f()
+            accumulator = function()
+            
         case .equals:
             performBinaryOperation()
         }
+        
         if _didResetAccumulator {
             expression.append(.operation(symbol))
         }
@@ -170,8 +232,7 @@ struct CalculatorBrain {
         return descriptions.reduce("", +)
     }
     
-    private var accumulator: Double? {  didSet {    _didResetAccumulator = true }   }
-    private var _didResetAccumulator: Bool = false
+   
     
     private var expression: [ExpressionLiteral] = []
     
@@ -185,30 +246,8 @@ struct CalculatorBrain {
         }
     }
     
-    private enum Operation {
-        case constant(Double)
-        case unaryOperation((Double) -> Double)
-        case binaryOperation((Double, Double) -> Double)
-        case operationNoArguments(()->Double)
-        case equals
-    }
     
-    private var operations: Dictionary<String, Operation> = [
-        "π": Operation.constant(Double.pi),
-        "e": Operation.constant(M_E),
-        "√": Operation.unaryOperation(sqrt),
-        "%": Operation.unaryOperation({ $0/100 }),
-        "sin": Operation.unaryOperation(sin),
-        "cos": Operation.unaryOperation(cos),
-        "tan": Operation.unaryOperation(tan),
-        "Ran": Operation.operationNoArguments({ Double(drand48()) }),
-        "⁺∕₋": Operation.unaryOperation { -$0 },
-        "×": Operation.binaryOperation(*),
-        "÷": Operation.binaryOperation(/),
-        "+": Operation.binaryOperation(+),
-        "-": Operation.binaryOperation(-),
-        "=": Operation.equals
-    ]
+    
     
     private mutating func performBinaryOperation() {
         guard pendingBinaryOperation != nil && accumulator != nil else {  return }
@@ -216,15 +255,6 @@ struct CalculatorBrain {
         pendingBinaryOperation = nil
     }
     
-    private var pendingBinaryOperation: PendingBinaryOperation?
     
-    private struct PendingBinaryOperation {
-        let function: (Double, Double) -> Double
-        let firstOperand: Double
-        
-        func perform(with secondOperand: Double) -> Double {
-            return function(firstOperand, secondOperand)
-        }
-    }
     
 }

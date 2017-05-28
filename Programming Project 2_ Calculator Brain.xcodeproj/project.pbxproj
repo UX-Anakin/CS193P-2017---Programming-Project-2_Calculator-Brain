@@ -58,10 +58,10 @@
 		EA6290C41E5663C200C6E439 /* Calculator Brain */ = {
 			isa = PBXGroup;
 			children = (
-				EA6290D71E56641700C6E439 /* Supporting Files */,
 				EA6290C71E5663C200C6E439 /* ViewController.swift */,
 				EA1D458A1E5A273200DCE5B7 /* CalculatorBrain.swift */,
 				EA6290C91E5663C200C6E439 /* Main.storyboard */,
+				EA6290D71E56641700C6E439 /* Supporting Files */,
 			);
 			name = "Calculator Brain";
 			path = Calculator;
@@ -111,7 +111,7 @@
 				TargetAttributes = {
 					EA6290C11E5663C100C6E439 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = X5SVCNCD2D;
+						DevelopmentTeam = X9669MJ564;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -278,10 +278,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = X5SVCNCD2D;
+				DEVELOPMENT_TEAM = X9669MJ564;
 				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "DeimanTechnology.Programming-Project-2--Calculator";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chyiyaqing.gmail.Programming-Project-2--Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -292,10 +292,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = X5SVCNCD2D;
+				DEVELOPMENT_TEAM = X9669MJ564;
 				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "DeimanTechnology.Programming-Project-2--Calculator";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chyiyaqing.gmail.Programming-Project-2--Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

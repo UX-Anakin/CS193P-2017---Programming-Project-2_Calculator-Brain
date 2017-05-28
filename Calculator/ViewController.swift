@@ -76,6 +76,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func performOperation(_ sender: UIButton) {
+        
         if userIsInTheMiddleOfTyping {
             brain.setOperand(displayValue)
         }
